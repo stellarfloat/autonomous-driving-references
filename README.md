@@ -1,6 +1,6 @@
 # 2021-1 차량지능기초 과제 1
 
-- `20203155 추헌준`
+`20203155 추헌준`
 
 ## 목차
 
@@ -9,7 +9,7 @@
   - nuScenes Dataset
   - Waymo Open Dataset
 - Open Source Examples
-  - 1
+  - Apollo
   - 2
 - Hands-on
   - 1
@@ -106,3 +106,42 @@ Description from : [waymo.com/open/about](https://waymo.com/open/about/)
   - High-quality labels for camera data in 1,000 segments
   - 11.8M 2D bounding box labels with tracking IDs on camera data
 
+## Open Source Examples
+
+### [Apollo](https://github.com/ApolloAuto/apollo)
+
+Apollo는 자율 주행 자동차들의 개발, 테스트, 배포를 도와주는 고성능이면서 유연한 아키텍쳐라고 합니다.
+
+#### Prerequisites
+
+- The vehicle equipped with the by-wire system, including but not limited to brake-by-wire, steering-by-wire, throttle-by-wire and shift-by-wire (Apollo is currently tested on Lincoln MKZ)
+- A machine with a 8-core processor and 16GB memory minimum
+- NVIDIA Turing GPU is strongly recommended
+- Ubuntu 18.04
+- NVIDIA driver version 455.32.00 and above (Web link)
+- Docker-CE version 19.03 and above
+- NVIDIA Container Toolkit
+
+Apollo가 아무래도 실제 자율주행 차량에 적용하도록 만들어진 플랫폼이다 보니, 실제 by-wire system이 탑재된 자동차가 필요하다는 것이 인상 깊었습니다.
+
+#### Architecture
+
+- Apollo 6.0
+
+<img src="https://github.com/ApolloAuto/apollo/blob/master/docs/demo_guide/images/Apollo_6_0.png" width="400">
+
+- Hardware Connection Overview
+
+<img src="https://github.com/ApolloAuto/apollo/raw/master/docs/demo_guide/images/Hardware_connection_3_5_1.png
+" width="400">
+
+- Software Overview
+
+<img src="https://github.com/ApolloAuto/apollo/raw/master/docs/demo_guide/images/Apollo_3_5_software_architecture.png
+" width="400">
+
+---
+
+### [ndrplz/self-driving-car](https://github.com/ndrplz/self-driving-car)
+
+Udacity Self-Driving Car Engineer Nanodegree 에 등장하는 코드들을 구현해 놓은 레포입니다. 
