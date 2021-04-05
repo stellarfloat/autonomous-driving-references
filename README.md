@@ -10,9 +10,9 @@
   - Waymo Open Dataset
 - Open Source Examples
   - Apollo
-  - 2
+  - ndrplz/self-driving-car
 - Hands-on
-  - 1
+  - ndrplz/self-driving-car/lane_finding_basic
 
 ## Datasets
 
@@ -145,3 +145,43 @@ Apollo가 아무래도 실제 자율주행 차량에 적용하도록 만들어�
 ### [ndrplz/self-driving-car](https://github.com/ndrplz/self-driving-car)
 
 Udacity Self-Driving Car Engineer Nanodegree 에 등장하는 코드들을 구현해 놓은 레포입니다. 
+
+#### P1: Basic Lane Finding
+
+이 코드의 목적은 기본적으로 차 정면에서 찍힌 이미지에서 차선을 식별하는 일련의 과정을 파이프라인화 하는 것입니다. 인식 과정에서 Neural Network는 사용되지 않고, 전통적인 컴퓨터 비전 기술들을 사용하여 간단한 인식을 수행하게 됩니다.
+
+먼저, 대략적인 실행의 흐름은 다음과 같습니다.
+
+> main.py
+```python
+in_image = cv2.cvtColor(cv2.imread(test_img, cv2.IMREAD_COLOR), cv2.COLOR_BGR2RGB)
+out_image = color_frame_pipeline([in_image], solid_lines=True)
+cv2.imwrite(out_path, cv2.cvtColor(out_image, cv2.COLOR_RGB2BGR))
+```
+
+`main.py`는 대상 이미지를 읽어서 `color_frame_pipeline()`을 호출하고, 리턴값을 받아 저장하는 간단한 구조로 이루어져 있습니다.
+
+`color_frame_pipeline()`은 `lane_detection.py`에 선언되어 있는데, 이 함수에서 `get_lane_lines()`을 호출하여 차선을 감지하고 이 데이터를 받아 받은 이미지에 합성하여 리턴합니다. 
+
+`get_lane_lines()`에서는 기계가 알아서 추출하는 것이 아닌 사람이 직접 설정한 기준을 활용해 차선을 추출합니다. 그 과정은 대략 다음과 같습니다.
+```
+흑백 변환 -> 이미지 블러 처리 -> edge detection -> hough transform -> 30도에서 60도 사이에 있는 직선 추출
+```
+
+
+이러한 과정을 거쳐 다음과 같은 결과가 도출됩니다.
+
+- 입력 이미지
+
+<img src="https://user-images.githubusercontent.com/66378218/113875631-efbd3880-97f1-11eb-83d5-1614ca2b5483.jpg
+" width="400">
+
+- 출력 이미지
+
+<img src="https://user-images.githubusercontent.com/66378218/113875779-11b6bb00-97f2-11eb-9c29-ce320d25cdad.jpg
+" width="400">
+
+## Hands-on
+
+### ndrplz/self-driving-car/lane_finding_basic
+
