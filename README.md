@@ -185,3 +185,52 @@ cv2.imwrite(out_path, cv2.cvtColor(out_image, cv2.COLOR_RGB2BGR))
 
 ### ndrplz/self-driving-car/lane_finding_basic
 
+> 1번 예제를 선택한 이유
+
+레포에 있는 일부 다른 예제들에는 tensorflow를 활용하여 좀 더 심화된 학습을 수행하기도 하지만, tensorflow 2 출시에 따라 breaking change가 다수 존재하여 구 버전을 기준으로 작성된 이 코드들과는 호환성 문제가 발생하였습니다. 따라서 지금까지도 호환성이 유지되는 라이브러리(opencv)를 사용한 이 예제를 선택하였습니다.
+
+#### 구현 환경
+
+- Prerequisites
+  - opencv-python
+  - matplotlib
+
+#### 발생한 이슈
+
+`cv2.cvtColor()`에서 파일 임포트 관련 문제가 발생하였습니다.
+
+```text
+cv2.error: OpenCV(4.5.1) color.cpp:182: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+```
+
+파일 경로에 한글이 들어가서 그런 것으로 추정되어서, 경로에 ASCII 문자만 존재하도록 프로젝트 폴더를 이동하였습니다. 그 결과, 예상대로 문제가 해결되었습니다.
+
+#### 개선점
+
+스크립트가 실행될 때, 기본적으로 경로 기준이 현재 작업 디렉토리로 잡히고 있었습니다. 이는 이미지 데이터들을 읽고 쓸 때 오류가 발생할 수도 있으므로 파일 I/O를 현재 작업 디렉토리와 독립적으로 작동하도록 수정하였습니다.
+파이썬 파일을 기준으로 경로 상수를 미리 저장하고, `os.path.join()`으로 상대적인 경로를 지정할 수 있었습니다.
+
+```python
+MAIN_DIR = os.path.split(os.path.abspath(__file__))[0]
+```
+
+#### 디렉토리 구조
+
+```text
+.
+├── Line.py
+├── data
+│   ├── test_images
+│   └── test_videos
+├── lane_detection.py
+├── main.py
+└── out
+    ├── images
+    └── videos
+```
+
+#### 실행
+
+```text
+python main.py
+```
